@@ -4,38 +4,56 @@
 
 ---
 
-## Reddit r/Python (Show & Tell)
+## Reddit r/Python (Showcase flair, text post)
+
+> Rules: Must use "Showcase" flair. Must be text post. Must include 3 required sections.
 
 **Title:** endpulse — Multi-endpoint API health checker with assertions, SSL monitoring, and CI exit codes
 
 **Body:**
 
-I built a CLI tool that fills the gap between one-shot HTTP clients (httpie, curl) and heavy monitoring infrastructure (Uptime Kuma, Datadog).
+## What My Project Does
 
-**What it does:**
-- Check multiple API endpoints concurrently in one command
-- Assert response body, headers, and status codes
-- Monitor SSL certificate expiry
-- Watch mode with a live-updating terminal table
-- `--fail` exit code for CI/CD pipelines
-- Slack/Discord/webhook alerts on failures
-- Output as table, JSON, Markdown, or CSV
+endpulse is a CLI tool that checks multiple API endpoints concurrently and reports their health status in a single command. It supports:
 
-**Quick example:**
+- Async concurrent health checks across 50+ endpoints simultaneously
+- Response assertions — validate body content, regex patterns, headers, and status codes directly from CLI flags
+- SSL certificate expiry monitoring with `--ssl`
+- Watch mode with a live-updating Rich terminal table (`-w 5` re-checks every 5 seconds)
+- CI/CD integration — `--fail` returns exit code 1 when any endpoint is down or fails an assertion
+- Webhook notifications to Slack, Discord, or generic webhooks on failure
+- Multiple output formats: table, JSON, Markdown (for GitHub Actions summaries), CSV
+- YAML config files for defining all endpoints, thresholds, and assertions in one place
 
 ```bash
 pip install endpulse
-endpulse https://api.example.com/health https://api.example.com/v2 --ssl --fail
+endpulse https://api.example.com/health https://api.example.com/v2 --ssl --fail -a "body_contains:ok"
 ```
-
-**Why I built this:** I was tired of writing bash scripts with curl loops to check staging endpoints after deploys. k6 is overkill for "are these 10 endpoints returning 200?", and Uptime Kuma requires running a server. I wanted `pip install` + one command.
-
-**Tech:** Python 3.9+, async with httpx, Rich for terminal output. No external service dependencies.
 
 GitHub: https://github.com/kimhinton/endpulse
 PyPI: https://pypi.org/project/endpulse/
 
-Would love feedback on the CLI design and any features you'd want to see next.
+## Target Audience
+
+This is meant for production use by developers and DevOps engineers who need to:
+
+- Verify staging/production API health after deployments
+- Add health-check steps to CI/CD pipelines (GitHub Actions, GitLab CI)
+- Monitor SSL certificate expiry without setting up a full monitoring stack
+- Replace fragile bash scripts that curl endpoints in a loop and grep for "ok"
+
+It is NOT a load testing tool — it checks health status, not performance under load.
+
+## Comparison
+
+| Tool | Difference from endpulse |
+|------|--------------------------|
+| **curl / httpie** | Single-endpoint only. No assertions, no watch mode, no concurrent checks. endpulse checks many endpoints at once with pass/fail assertions. |
+| **hurl** | Closest competitor. Has assertions and CI support, but uses its own file format (not YAML), has no watch mode, and no concurrent multi-endpoint dashboard. |
+| **k6 / Artillery** | Load testing tools that require JavaScript scripts. Overkill for "are these 10 endpoints returning 200?". endpulse is a health checker, not a load tester. |
+| **Uptime Kuma / Gatus** | Require deploying and running a server with a web UI. endpulse is zero-infrastructure — `pip install` and run from terminal or CI. |
+
+Built with Python 3.9+, httpx for async HTTP, Rich for terminal output, Click for CLI. No external service dependencies.
 
 ---
 
