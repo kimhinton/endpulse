@@ -1,0 +1,91 @@
+name: "endpulse"
+description: |
+  Lightweight endpoint health checker for CI/CD pipelines.
+  Checks API response times, status codes, and SSL certificates.
+
+  Usage:
+    - uses: kimhinton/endpulse@v0.3.0
+      with:
+        config: endpoints.yaml
+        fail: true
+        ssl: true
+
+branding:
+  icon: "activity"
+  color: "green"
+
+inputs:
+  python-version:
+    description: "Python version to use"
+    required: false
+    default: "3.12"
+  config:
+    description: "Path to YAML config file"
+    required: false
+  urls:
+    description: "Space-separated URLs to check"
+    required: false
+  fail:
+    description: "Exit with code 1 if any endpoint is down"
+    required: false
+    default: "true"
+  output:
+    description: "Output format (table, json, markdown, csv)"
+    required: false
+    default: "table"
+  ssl:
+    description: "Check SSL certificate expiry"
+    required: false
+    default: "false"
+  args:
+    description: "Additional CLI arguments passed to endpulse"
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Install endpulse
+      shell: bash
+      run: pip install endpulse
+
+    - name: Run endpulse
+      shell: bash
+      run: |
+        CMD="endpulse"
+
+        if [ -n "${{ inputs.config }}" ]; then
+          CMD="$CMD -c ${{ inputs.config }}"
+        fi
+
+        if [ -n "${{ inputs.urls }}" ]; then
+          CMD="$CMD ${{ inputs.urls }}"
+        fi
+
+        if [ -z "${{ inputs.config }}" ] && [ -z "${{ inputs.urls }}" ]; then
+          echo "::error::Either 'config' or 'urls' input is required"
+          exit 1
+        fi
+
+        if [ "${{ inputs.fail }}" = "true" ]; then
+          CMD="$CMD --fail"
+        fi
+
+        if [ "${{ inputs.output }}" != "table" ]; then
+          CMD="$CMD --output ${{ inputs.output }}"
+        fi
+
+        if [ "${{ inputs.ssl }}" = "true" ]; then
+          CMD="$CMD --ssl"
+        fi
+
+        if [ -n "${{ inputs.args }}" ]; then
+          CMD="$CMD ${{ inputs.args }}"
+        fi
+
+        echo "Running: $CMD"
+        eval "$CMD"
