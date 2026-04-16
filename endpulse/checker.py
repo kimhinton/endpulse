@@ -20,6 +20,7 @@ async def check_endpoint(
             timeout=config.timeout,
         )
         elapsed_ms = (time.perf_counter() - start) * 1000
+        body_text = response.text
 
         if response.status_code != config.expected_status:
             status = Status.ERROR
@@ -28,14 +29,22 @@ async def check_endpoint(
         else:
             status = Status.UP
 
-        return EndpointResult(
+        result = EndpointResult(
             url=config.url,
             status_code=response.status_code,
             response_time_ms=round(elapsed_ms, 2),
             status=status,
-            headers=dict(response.headers),
+            headers={k.lower(): v for k, v in response.headers.items()},
             size_bytes=len(response.content),
+            body=body_text,
         )
+
+        for assertion in config.assertions:
+            if not assertion.check(result):
+                result.failed_assertions.append(assertion.describe())
+                result.status = Status.ERROR
+
+        return result
     except httpx.TimeoutException:
         elapsed_ms = (time.perf_counter() - start) * 1000
         return EndpointResult(

@@ -3,7 +3,7 @@ import pytest
 import respx
 
 from endpulse.checker import check_endpoint, check_endpoints
-from endpulse.models import EndpointConfig, Status
+from endpulse.models import Assertion, EndpointConfig, Status
 
 
 @respx.mock
@@ -19,6 +19,7 @@ async def test_check_endpoint_up():
     assert result.status == Status.UP
     assert result.status_code == 200
     assert result.response_time_ms > 0
+    assert result.body == "ok"
 
 
 @respx.mock
@@ -79,3 +80,38 @@ async def test_check_endpoints_multiple():
     results = await check_endpoints(configs)
     assert len(results) == 2
     assert all(r.status == Status.UP for r in results)
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_check_endpoint_with_assertion_pass():
+    respx.get("https://api.example.com/health").mock(
+        return_value=httpx.Response(200, text='{"status": "ok"}')
+    )
+    config = EndpointConfig(
+        url="https://api.example.com/health",
+        assertions=[Assertion(type="body_contains", value="ok")],
+    )
+    async with httpx.AsyncClient() as client:
+        result = await check_endpoint(client, config)
+
+    assert result.status == Status.UP
+    assert result.failed_assertions == []
+
+
+@respx.mock
+@pytest.mark.asyncio
+async def test_check_endpoint_with_assertion_fail():
+    respx.get("https://api.example.com/health").mock(
+        return_value=httpx.Response(200, text='{"status": "degraded"}')
+    )
+    config = EndpointConfig(
+        url="https://api.example.com/health",
+        assertions=[Assertion(type="body_contains", value="healthy")],
+    )
+    async with httpx.AsyncClient() as client:
+        result = await check_endpoint(client, config)
+
+    assert result.status == Status.ERROR
+    assert len(result.failed_assertions) == 1
+    assert "body_contains=healthy" in result.failed_assertions

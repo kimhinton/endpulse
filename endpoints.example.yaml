@@ -11,12 +11,21 @@ endpoints:
   - https://httpbin.org/get
   - https://httpbin.org/status/200
 
-  # Detailed format
+  # Detailed format with assertions
+  - url: https://httpbin.org/get
+    method: GET
+    timeout: 5
+    assert:
+      - "body_contains:origin"
+      - "header_contains:content-type:json"
+
+  # POST with custom expected status
   - url: https://httpbin.org/post
     method: POST
     expected_status: 200
     timeout: 5
 
+  # Slow endpoint with higher threshold
   - url: https://httpbin.org/delay/2
     threshold_ms: 3000
     timeout: 5

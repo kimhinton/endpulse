@@ -1,6 +1,6 @@
 import pytest
 
-from endpulse.config import load_config, urls_to_configs
+from endpulse.config import load_config, parse_cli_assertions, urls_to_configs
 
 
 def test_urls_to_configs():
@@ -35,8 +35,38 @@ endpoints:
     assert configs[1].expected_status == 201
 
 
+def test_load_config_with_assertions(tmp_path):
+    config_file = tmp_path / "endpoints.yaml"
+    config_file.write_text(
+        """
+endpoints:
+  - url: https://api.example.com/health
+    assert:
+      - "body_contains:ok"
+      - "header_contains:content-type:json"
+"""
+    )
+    configs = load_config(config_file)
+    assert len(configs) == 1
+    assert len(configs[0].assertions) == 2
+    assert configs[0].assertions[0].type == "body_contains"
+    assert configs[0].assertions[0].value == "ok"
+    assert configs[0].assertions[1].type == "header_contains"
+    assert configs[0].assertions[1].value == "content-type:json"
+
+
 def test_load_config_invalid(tmp_path):
     config_file = tmp_path / "bad.yaml"
     config_file.write_text("foo: bar")
     with pytest.raises(ValueError, match="must contain an 'endpoints' key"):
         load_config(config_file)
+
+
+def test_parse_cli_assertions():
+    raw = ("body_contains:ok", "status:200")
+    assertions = parse_cli_assertions(raw)
+    assert len(assertions) == 2
+    assert assertions[0].type == "body_contains"
+    assert assertions[0].value == "ok"
+    assert assertions[1].type == "status"
+    assert assertions[1].value == "200"
