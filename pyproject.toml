@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "endpulse"
-version = "0.2.0"
+version = "0.3.0"
 description = "Lightweight CLI tool for API endpoint health checking and response time monitoring"
 readme = "README.md"
 license = "MIT"

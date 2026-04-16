@@ -13,6 +13,15 @@ class Status(Enum):
 
 
 @dataclass
+class SSLInfo:
+    issuer: str = ""
+    subject: str = ""
+    expires: str = ""
+    days_remaining: int = 0
+    error: str | None = None
+
+
+@dataclass
 class Assertion:
     type: str  # "status", "body_contains", "body_regex", "header_contains"
     value: str
@@ -45,6 +54,7 @@ class EndpointResult:
     size_bytes: int = 0
     body: str | None = None
     failed_assertions: list[str] = field(default_factory=list)
+    ssl_info: SSLInfo | None = None
 
 
 @dataclass

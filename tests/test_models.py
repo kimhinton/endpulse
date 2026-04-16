@@ -1,4 +1,4 @@
-from endpulse.models import Assertion, EndpointConfig, EndpointResult, Status
+from endpulse.models import Assertion, EndpointConfig, EndpointResult, SSLInfo, Status
 
 
 def test_endpoint_result_defaults():
@@ -10,6 +10,7 @@ def test_endpoint_result_defaults():
     assert r.size_bytes == 0
     assert r.body is None
     assert r.failed_assertions == []
+    assert r.ssl_info is None
 
 
 def test_endpoint_config_defaults():
@@ -67,3 +68,34 @@ def test_assertion_status():
 def test_assertion_describe():
     a = Assertion(type="body_contains", value="ok")
     assert a.describe() == "body_contains=ok"
+
+
+def test_ssl_info_defaults():
+    s = SSLInfo()
+    assert s.issuer == ""
+    assert s.subject == ""
+    assert s.expires == ""
+    assert s.days_remaining == 0
+    assert s.error is None
+
+
+def test_ssl_info_with_data():
+    s = SSLInfo(
+        issuer="CN=Let's Encrypt",
+        subject="CN=example.com",
+        expires="Dec 31 23:59:59 2025 GMT",
+        days_remaining=90,
+    )
+    assert s.days_remaining == 90
+    assert "Let's Encrypt" in s.issuer
+
+
+def test_endpoint_result_with_ssl():
+    ssl = SSLInfo(days_remaining=45, expires="Jun 30 2025 GMT")
+    r = EndpointResult(
+        url="https://example.com",
+        status=Status.UP,
+        ssl_info=ssl,
+    )
+    assert r.ssl_info is not None
+    assert r.ssl_info.days_remaining == 45

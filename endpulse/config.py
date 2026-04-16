@@ -6,14 +6,70 @@ import yaml
 
 from endpulse.models import Assertion, EndpointConfig
 
+INIT_TEMPLATE = """\
+# endpulse configuration
+# Usage: endpulse -c endpoints.yaml
+# Docs:  https://github.com/kimhinton/endpulse
 
-def load_config(path: Path) -> list[EndpointConfig]:
+defaults:
+  timeout: 10
+  threshold_ms: 1000
+  method: GET
+
+# Webhook notifications (optional)
+# Sends alert when any endpoint fails
+# Supports Slack, Discord, or any generic webhook
+#
+# notify:
+#   - https://hooks.slack.com/services/YOUR/WEBHOOK/URL
+#   - https://discord.com/api/webhooks/YOUR/WEBHOOK
+
+endpoints:
+  # Simple URL format
+  - https://your-api.com/health
+
+  # Detailed format with assertions
+  - url: https://your-api.com/v2/status
+    method: GET
+    timeout: 5
+    threshold_ms: 500
+    assert:
+      - "body_contains:ok"
+      - "status:200"
+      - "header_contains:content-type:json"
+
+  # POST endpoint with custom expected status
+  - url: https://your-api.com/webhook
+    method: POST
+    expected_status: 201
+    timeout: 5
+
+  # Endpoint with higher threshold for slow services
+  - url: https://your-api.com/reports
+    threshold_ms: 5000
+    timeout: 15
+"""
+
+
+def generate_init_config(path: Path) -> Path:
+    """Generate a sample endpoints.yaml config file."""
+    output = path / "endpoints.yaml"
+    output.write_text(INIT_TEMPLATE, encoding="utf-8")
+    return output
+
+
+def load_config(path: Path) -> tuple[list[EndpointConfig], list[str]]:
+    """Load config from YAML. Returns (endpoint_configs, notify_urls)."""
     data = yaml.safe_load(path.read_text(encoding="utf-8"))
 
     if not isinstance(data, dict) or "endpoints" not in data:
         raise ValueError(f"Invalid config: {path} must contain an 'endpoints' key")
 
     defaults = data.get("defaults", {})
+    notify_urls: list[str] = data.get("notify", [])
+    if isinstance(notify_urls, str):
+        notify_urls = [notify_urls]
+
     configs = []
 
     for ep in data["endpoints"]:
@@ -38,7 +94,7 @@ def load_config(path: Path) -> list[EndpointConfig]:
             )
         )
 
-    return configs
+    return configs, notify_urls
 
 
 def _parse_assertions(raw: list[str] | str) -> list[Assertion]:

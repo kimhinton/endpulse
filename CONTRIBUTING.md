@@ -26,6 +26,21 @@ ruff check endpulse/ tests/
 mypy endpulse/
 ```
 
+## Project Structure
+
+```
+endpulse/
+  cli.py          # Click CLI entry point
+  checker.py      # Async HTTP endpoint checking
+  config.py       # YAML config loading and init template
+  models.py       # Data models (EndpointConfig, EndpointResult, SSLInfo)
+  reporter.py     # Output formatting (table, JSON, Markdown, CSV)
+  ssl_checker.py  # SSL certificate expiry checking
+  notifier.py     # Webhook notifications (Slack, Discord, generic)
+tests/
+  test_*.py       # Test files matching each module
+```
+
 ## Pull Requests
 
 1. Fork the repo and create a feature branch

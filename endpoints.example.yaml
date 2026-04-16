@@ -1,10 +1,18 @@
 # endpulse configuration example
 # Usage: endpulse -c endpoints.yaml
+# Generate this file: endpulse --init
 
 defaults:
   timeout: 10
   threshold_ms: 800
   method: GET
+
+# Webhook notifications — alert on endpoint failures
+# Supports Slack, Discord, or any generic webhook URL
+#
+# notify:
+#   - https://hooks.slack.com/services/YOUR/WEBHOOK/URL
+#   - https://discord.com/api/webhooks/YOUR/WEBHOOK
 
 endpoints:
   # Simple URL format

@@ -6,10 +6,14 @@ import time
 import httpx
 
 from endpulse.models import EndpointConfig, EndpointResult, Status
+from endpulse.ssl_checker import check_ssl
 
 
 async def check_endpoint(
-    client: httpx.AsyncClient, config: EndpointConfig
+    client: httpx.AsyncClient,
+    config: EndpointConfig,
+    *,
+    ssl_check: bool = False,
 ) -> EndpointResult:
     start = time.perf_counter()
     try:
@@ -44,6 +48,12 @@ async def check_endpoint(
                 result.failed_assertions.append(assertion.describe())
                 result.status = Status.ERROR
 
+        if ssl_check:
+            loop = asyncio.get_event_loop()
+            result.ssl_info = await loop.run_in_executor(
+                None, check_ssl, config.url, config.timeout
+            )
+
         return result
     except httpx.TimeoutException:
         elapsed_ms = (time.perf_counter() - start) * 1000
@@ -66,6 +76,8 @@ async def check_endpoint(
 async def check_endpoints(
     configs: list[EndpointConfig],
     concurrency: int = 10,
+    *,
+    ssl_check: bool = False,
 ) -> list[EndpointResult]:
     semaphore = asyncio.Semaphore(concurrency)
 
@@ -73,7 +85,7 @@ async def check_endpoints(
         client: httpx.AsyncClient, config: EndpointConfig
     ) -> EndpointResult:
         async with semaphore:
-            return await check_endpoint(client, config)
+            return await check_endpoint(client, config, ssl_check=ssl_check)
 
     async with httpx.AsyncClient(follow_redirects=True) as client:
         tasks = [bounded_check(client, cfg) for cfg in configs]
