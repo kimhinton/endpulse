@@ -1,0 +1,22 @@
+# endpulse configuration example
+# Usage: endpulse -c endpoints.yaml
+
+defaults:
+  timeout: 10
+  threshold_ms: 800
+  method: GET
+
+endpoints:
+  # Simple URL format
+  - https://httpbin.org/get
+  - https://httpbin.org/status/200
+
+  # Detailed format
+  - url: https://httpbin.org/post
+    method: POST
+    expected_status: 200
+    timeout: 5
+
+  - url: https://httpbin.org/delay/2
+    threshold_ms: 3000
+    timeout: 5
