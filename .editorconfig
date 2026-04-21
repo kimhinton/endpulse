@@ -1,0 +1,29 @@
+# EditorConfig is awesome: https://EditorConfig.org
+#
+# Defines coding style so every editor, IDE, and auto-formatter agrees.
+# Picked up automatically by VS Code, PyCharm, IntelliJ, Sublime, Vim, Emacs,
+# and many GitHub crawlers as a "well-maintained project" signal.
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+max_line_length = 100
+
+[*.{yml,yaml,json,toml,cff}]
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false  # trailing spaces = hard line break in Markdown
+max_line_length = 0
+
+[Makefile]
+indent_style = tab
+
+[*.{html,css,js}]
+indent_size = 2

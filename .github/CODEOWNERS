@@ -1,0 +1,25 @@
+# Code owners for endpulse
+# Every pull request requires review from the relevant owner.
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owner — catches anything not matched below
+*                           @kimhinton
+
+# CLI and core runtime
+/endpulse/                  @kimhinton
+/tests/                     @kimhinton
+
+# Distribution and packaging
+/pyproject.toml             @kimhinton
+/action.yml                 @kimhinton
+/CHANGELOG.md               @kimhinton
+
+# Docs, landing, launch playbook
+/README.md                  @kimhinton
+/docs/                      @kimhinton
+/CONTRIBUTING.md            @kimhinton
+/SECURITY.md                @kimhinton
+/CITATION.cff               @kimhinton
+
+# CI, automation, policy
+/.github/                   @kimhinton

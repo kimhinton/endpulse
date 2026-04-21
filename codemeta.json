@@ -1,0 +1,79 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "name": "endpulse",
+  "description": "Lightweight Python CLI for multi-endpoint API health checking with response assertions, SSL certificate monitoring, watch mode, webhook alerts, and CI exit codes. Zero-infrastructure — fills the gap between one-off HTTP clients (curl, httpie) and heavy monitoring stacks (k6, Uptime Kuma, Gatus).",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": ["Linux", "macOS", "Windows"],
+  "programmingLanguage": {
+    "@type": "ComputerLanguage",
+    "name": "Python",
+    "version": "3.9+"
+  },
+  "runtimePlatform": "Python 3.9, 3.10, 3.11, 3.12, 3.13",
+  "license": "https://spdx.org/licenses/MIT",
+  "codeRepository": "https://github.com/kimhinton/endpulse",
+  "issueTracker": "https://github.com/kimhinton/endpulse/issues",
+  "url": "https://kimhinton.github.io/endpulse/",
+  "downloadUrl": "https://pypi.org/project/endpulse/",
+  "installUrl": "https://pypi.org/project/endpulse/",
+  "releaseNotes": "https://github.com/kimhinton/endpulse/releases",
+  "softwareVersion": "0.3.0",
+  "datePublished": "2026-04-16",
+  "dateModified": "2026-04-21",
+  "keywords": [
+    "api",
+    "api-monitoring",
+    "ci-cd",
+    "cli",
+    "command-line-tool",
+    "developer-tools",
+    "devops",
+    "endpoint",
+    "health-check",
+    "http-client",
+    "monitoring",
+    "observability",
+    "python",
+    "sre",
+    "ssl",
+    "synthetic-monitoring",
+    "uptime-monitoring",
+    "webhook"
+  ],
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Kim M.",
+      "familyName": "Hinton",
+      "email": "kim.hinton00@gmail.com"
+    }
+  ],
+  "maintainer": [
+    {
+      "@type": "Person",
+      "givenName": "Kim M.",
+      "familyName": "Hinton"
+    }
+  ],
+  "copyrightYear": "2026",
+  "copyrightHolder": {
+    "@type": "Person",
+    "name": "Kim M. Hinton"
+  },
+  "softwareRequirements": [
+    "httpx >= 0.27.0",
+    "click >= 8.1.0",
+    "rich >= 13.0.0",
+    "pyyaml >= 6.0"
+  ],
+  "developmentStatus": "active",
+  "targetProduct": {
+    "@type": "SoftwareApplication",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Cross-platform"
+  },
+  "funding": null,
+  "contIntegration": "https://github.com/kimhinton/endpulse/actions",
+  "readme": "https://github.com/kimhinton/endpulse#readme"
+}

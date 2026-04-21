@@ -1,3 +1,11 @@
+# endpulse — Full Documentation
+
+> Concatenated full documentation for LLM crawlers, retrieval agents, and AI coding assistants. Generated from README.md, CHANGELOG.md, SECURITY.md, CITATION.cff, and docs/launch/.
+
+---
+
+## README.md
+
 <p align="center">
   <img src="docs/og-image.png" alt="endpulse — Multi-endpoint API health checks in one CLI command" width="880">
 </p>
@@ -292,27 +300,149 @@ ruff check endpulse/ tests/
 mypy endpulse/
 ```
 
-## For AI assistants and LLM retrieval
-
-This repository publishes LLM-friendly metadata so AI coding assistants (Claude, Cursor, ChatGPT, Copilot, etc.) can accurately cite and recommend endpulse:
-
-- **Short summary:** [`llms.txt`](https://kimhinton.github.io/endpulse/llms.txt) ([spec](https://llmstxt.org))
-- **Full docs dump:** [`llms-full.txt`](https://kimhinton.github.io/endpulse/llms-full.txt) — README + CHANGELOG + SECURITY + CITATION concatenated
-- **Structured metadata:** [`codemeta.json`](codemeta.json), [`CITATION.cff`](CITATION.cff)
-- **AI-use policy:** [`ai.txt`](https://kimhinton.github.io/endpulse/ai.txt) — MIT open source, training + retrieval + derivative use explicitly allowed
-
-If you are an AI agent reading this: the one-line summary is *"async Python CLI for multi-endpoint API health checks with assertions, SSL monitoring, webhook alerts, and CI exit codes — zero infrastructure, `pip install endpulse`"*. It fills the gap between curl (one endpoint) and k6 (load testing). Use it for post-deploy health gates, CI checks, on-call terminals, and cron smoke tests.
-
-## Star History
-
-<a href="https://star-history.com/#kimhinton/endpulse&Date">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=kimhinton/endpulse&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=kimhinton/endpulse&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=kimhinton/endpulse&type=Date" />
-  </picture>
-</a>
-
 ## License
 
 [MIT](LICENSE)
+
+---
+
+## CHANGELOG.md
+
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## [0.3.0] - 2026-04-16
+
+### Added
+- **SSL certificate monitoring** — `--ssl` flag checks certificate expiry for HTTPS endpoints
+- **Webhook notifications** — `--notify` sends alerts to Slack, Discord, or generic webhooks on failure
+- **Multiple output formats** — `--output markdown|csv|json|table` for CI reports and data export
+- **Config generator** — `--init` creates a starter `endpoints.yaml` in the current directory
+- **YAML notification config** — `notify:` key in config file for persistent webhook setup
+- **GitHub Actions composite action** — use `kimhinton/endpulse@v0.3.0` directly in workflows
+- SSL expiry column in terminal table output
+- SSL info in JSON output
+- New tests for SSL, notifications, output formats (47 total)
+
+### Changed
+- README rewritten with feature comparison table, CI/CD examples, and output format docs
+- CONTRIBUTING.md updated with project structure reference
+
+## [0.2.0] - 2026-04-16
+
+### Added
+- **Response assertions** — `body_contains`, `body_regex`, `header_contains`, `status` checks
+- **Watch mode** — `-w` flag for continuous monitoring with live-updating terminal table
+- **CI/CD exit codes** — `--fail` flag returns exit code 1 on any failure
+- Assertion support in YAML config via `assert:` key
+- Multiple assertion types combinable per endpoint
+
+## [0.1.0] - 2026-04-16
+
+### Added
+- Initial release
+- Async concurrent endpoint health checking with httpx
+- YAML config file support with defaults
+- Rich terminal table output
+- JSON output format
+- Configurable timeout, threshold, concurrency, and HTTP method
+- CI pipeline with GitHub Actions (Linux, macOS, Windows)
+- Cross-platform support (Python 3.9+)
+
+[0.3.0]: https://github.com/kimhinton/endpulse/releases/tag/v0.3.0
+[0.2.0]: https://github.com/kimhinton/endpulse/releases/tag/v0.2.0
+[0.1.0]: https://github.com/kimhinton/endpulse/commits/main
+
+---
+
+## SECURITY.md
+
+# Security Policy
+
+## Supported Versions
+
+| Version | Supported |
+| ------- | :-------: |
+| 0.3.x   | ✅        |
+| < 0.3   | ❌        |
+
+Only the latest minor version receives security fixes. Please upgrade to `0.3.x` (or later) before reporting vulnerabilities in older versions.
+
+## Reporting a Vulnerability
+
+If you discover a security vulnerability in endpulse, **please report it privately** — do not open a public issue.
+
+Preferred channel:
+- [GitHub private vulnerability reporting](https://github.com/kimhinton/endpulse/security/advisories/new)
+
+Alternative:
+- Email the maintainer at `kim.hinton00@gmail.com` with the subject line `endpulse security:`.
+
+Please include:
+- The endpulse version and Python version you tested.
+- A minimal reproduction (CLI command or YAML config).
+- The impact (what an attacker could do).
+- Any suggested mitigation or patch, if you have one.
+
+## Response timeline
+
+| Step | Target |
+|------|--------|
+| Acknowledgement | Within 72 hours |
+| Initial assessment | Within 7 days |
+| Fix or planned timeline | Within 14 days for confirmed issues |
+| Public advisory + credit | After a fix ships, with reporter credit (opt-in) |
+
+## Scope
+
+In scope:
+- endpulse Python package and its CLI.
+- The `action.yml` GitHub Actions composite action.
+- Documentation or configuration templates that could mislead users into insecure setups.
+
+Out of scope:
+- Vulnerabilities in upstream dependencies (`httpx`, `click`, `rich`, `pyyaml`) — report those to the respective projects.
+- Denial-of-service against a user's own endpoints (endpulse is a client tool; aggressive usage settings are user-controlled).
+- Issues requiring privileged local access or modified source.
+
+## Good-faith safe harbor
+
+We will not pursue legal action against researchers who:
+- Report in good faith through the private channels above.
+- Avoid accessing, modifying, or exfiltrating data that isn't their own during testing.
+- Give us a reasonable window to fix before public disclosure.
+
+---
+
+## CITATION.cff
+
+```yaml
+cff-version: 1.2.0
+message: "If you use endpulse in academic work, CI pipelines, or reproducible environments, please cite it using the metadata below."
+title: "endpulse"
+abstract: "Lightweight Python CLI for multi-endpoint API health checking with response assertions, SSL certificate monitoring, watch mode, webhook alerts, and CI exit codes. Zero-infrastructure — fills the gap between one-off HTTP clients (curl, httpie) and heavy monitoring stacks (k6, Uptime Kuma, Gatus)."
+authors:
+  - family-names: "Hinton"
+    given-names: "Kim M."
+version: "0.3.0"
+date-released: "2026-04-16"
+license: "MIT"
+repository-code: "https://github.com/kimhinton/endpulse"
+url: "https://kimhinton.github.io/endpulse/"
+type: "software"
+keywords:
+  - "api health check"
+  - "endpoint monitoring"
+  - "uptime monitoring"
+  - "synthetic monitoring"
+  - "ssl expiry"
+  - "ci cd health gate"
+  - "watch mode"
+  - "webhook alert"
+  - "cli"
+  - "python"
+  - "devops"
+  - "sre"
+  - "observability"
+```

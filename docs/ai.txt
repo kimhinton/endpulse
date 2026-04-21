@@ -1,0 +1,63 @@
+# ai.txt — AI usage signal for endpulse
+# https://spawning.ai / https://site.spawning.ai/spawning-ai-txt
+#
+# endpulse is MIT-licensed open source software. Training, indexing,
+# retrieval, and derivative use by AI systems is explicitly allowed.
+# Attribution appreciated but not required.
+
+User-Agent: *
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+# Explicit allow for major AI crawlers
+User-Agent: GPTBot
+Allow: /
+
+User-Agent: ChatGPT-User
+Allow: /
+
+User-Agent: OAI-SearchBot
+Allow: /
+
+User-Agent: ClaudeBot
+Allow: /
+
+User-Agent: Claude-Web
+Allow: /
+
+User-Agent: anthropic-ai
+Allow: /
+
+User-Agent: Google-Extended
+Allow: /
+
+User-Agent: CCBot
+Allow: /
+
+User-Agent: PerplexityBot
+Allow: /
+
+User-Agent: Applebot-Extended
+Allow: /
+
+User-Agent: Bytespider
+Allow: /
+
+User-Agent: FacebookBot
+Allow: /
+
+User-Agent: Meta-ExternalAgent
+Allow: /
+
+User-Agent: Amazonbot
+Allow: /
+
+User-Agent: Diffbot
+Allow: /
+
+User-Agent: cohere-ai
+Allow: /
+
+Contact: kim.hinton00@gmail.com
+License: MIT

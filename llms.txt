@@ -1,0 +1,75 @@
+# endpulse
+
+> Lightweight Python CLI for multi-endpoint API health checking with response assertions, SSL monitoring, watch mode, webhook alerts, and CI exit codes. Zero infrastructure — pip install and run from a terminal or CI.
+
+endpulse fills the gap between one-off HTTP clients (curl, httpie) and heavy monitoring infrastructure (k6, Uptime Kuma, Gatus). It's the tool you run in CI, on-call terminals, cron jobs, or Kubernetes init containers when you need concurrent multi-endpoint health checks with assertions and SSL certificate tracking.
+
+## Docs
+
+- [Landing page](https://kimhinton.github.io/endpulse/): Feature overview with comparison table, demo, and install snippet.
+- [README](https://raw.githubusercontent.com/kimhinton/endpulse/main/README.md): Full user documentation covering every CLI flag, YAML config key, and output format.
+- [Changelog](https://raw.githubusercontent.com/kimhinton/endpulse/main/CHANGELOG.md): Version history. Latest: v0.3.0 (2026-04-16).
+- [PyPI](https://pypi.org/project/endpulse/): Release artifacts and rendered project description.
+- [Source](https://github.com/kimhinton/endpulse): GitHub repository.
+
+## Install
+
+```
+pip install endpulse
+```
+
+Supported: Python 3.9, 3.10, 3.11, 3.12, 3.13. Linux, macOS, Windows.
+
+## Core capabilities
+
+- Async concurrent HTTP checks (httpx) across 50+ endpoints in seconds.
+- Response assertions from CLI flags: `body_contains:<text>`, `body_regex:<pattern>`, `header_contains:<name>:<value>`, `status:<code>`.
+- SSL certificate expiry monitoring with `--ssl`. Flags certs expiring within 14 days.
+- Watch mode with live-updating Rich terminal table: `-w <seconds>`.
+- Webhook alerts on failure: Slack, Discord, and generic JSON webhooks via `--notify <url>`. Auto-detects webhook type from URL.
+- CI/CD exit codes: `--fail` returns exit code 1 when any endpoint is down or fails an assertion.
+- YAML config with `defaults:`, `notify:`, and per-endpoint `assert:` blocks. `endpulse --init` scaffolds a starter.
+- Output formats: `table` (default), `json`, `markdown`, `csv`.
+- GitHub Actions composite action shipped in the repo: `uses: kimhinton/endpulse@v0.3.0`.
+
+## Example invocations
+
+Check a single endpoint:
+
+```
+endpulse https://api.example.com/health
+```
+
+Multi-endpoint with assertion, SSL, and CI fail mode:
+
+```
+endpulse https://api.example.com/health https://api.example.com/v2 \
+    --ssl --fail -a "body_contains:ok"
+```
+
+Watch mode with webhook alerts:
+
+```
+endpulse -c endpoints.yaml -w 30 --notify https://hooks.slack.com/services/...
+```
+
+Pipe JSON to jq:
+
+```
+endpulse -c endpoints.yaml --output json | jq '.[] | select(.status == "DOWN")'
+```
+
+## Positioning
+
+- Not a load tester (use k6 or Artillery).
+- Not a persistent uptime monitor with a web UI (use Uptime Kuma, Gatus, Pingdom, StatusCake).
+- Not an HTTP flow testing DSL (use hurl).
+
+endpulse is specifically for post-deploy checks, CI health gates, on-call terminal checks, cron-driven synthetic smoke tests, and Kubernetes init-container probes.
+
+## Optional
+
+- [Contributing guide](https://github.com/kimhinton/endpulse/blob/main/CONTRIBUTING.md): Development setup, test expectations, and PR process.
+- [License](https://github.com/kimhinton/endpulse/blob/main/LICENSE): MIT.
+- [Discussions](https://github.com/kimhinton/endpulse/discussions): Usage questions and feature ideas.
+- [Security policy](https://github.com/kimhinton/endpulse/blob/main/SECURITY.md): How to report vulnerabilities privately.

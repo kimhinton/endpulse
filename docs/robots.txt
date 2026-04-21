@@ -1,4 +1,64 @@
+# robots.txt for endpulse landing (https://kimhinton.github.io/endpulse/)
+# MIT-licensed open source. Indexing, training, retrieval, and derivative
+# use by any crawler — including AI / LLM crawlers — is explicitly allowed.
+#
+# Detailed AI-use signals: /ai.txt  (https://site.spawning.ai/spawning-ai-txt)
+# LLM-ready content: /llms.txt  (https://llmstxt.org)
+# Full doc dump for LLM context: /llms-full.txt
+# Machine-readable metadata: /.well-known/security.txt, /sitemap.xml
+
 User-agent: *
+Allow: /
+
+# Explicit allow for AI / LLM crawlers (same result as default, but recorded
+# as an opt-in signal for crawler policies that default-deny when unspecified).
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: cohere-ai
 Allow: /
 
 Sitemap: https://kimhinton.github.io/endpulse/sitemap.xml
