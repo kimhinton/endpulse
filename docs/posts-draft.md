@@ -1,6 +1,8 @@
 # Launch Post Drafts
 
-> These are ready-to-post drafts. Copy and paste to each platform.
+> ⚠ **Superseded by [`launch/`](launch/README.md).**
+> Each channel now has its own file with title A/B options, posting-time guidance, pre-flight checklists, and a response playbook.
+> This file is kept for git history; use the split versions for actual posting.
 
 ---
 
