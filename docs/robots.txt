@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kimhinton.github.io/endpulse/sitemap.xml

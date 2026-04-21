@@ -1,11 +1,24 @@
-# endpulse
+<p align="center">
+  <img src="docs/og-image.png" alt="endpulse — Multi-endpoint API health checks in one CLI command" width="880">
+</p>
 
-[![CI](https://github.com/kimhinton/endpulse/actions/workflows/ci.yml/badge.svg)](https://github.com/kimhinton/endpulse/actions/workflows/ci.yml)
-[![PyPI](https://img.shields.io/pypi/v/endpulse.svg)](https://pypi.org/project/endpulse/)
-[![Python](https://img.shields.io/badge/python-3.9+-blue.svg)](https://python.org)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+<h1 align="center">endpulse</h1>
 
-**Multi-endpoint API health checks with assertions, SSL monitoring, and CI exit codes — in a single command.**
+<p align="center">
+  <a href="https://github.com/kimhinton/endpulse/actions/workflows/ci.yml"><img src="https://github.com/kimhinton/endpulse/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://pypi.org/project/endpulse/"><img src="https://img.shields.io/pypi/v/endpulse.svg" alt="PyPI"></a>
+  <a href="https://pepy.tech/project/endpulse"><img src="https://img.shields.io/pepy/dt/endpulse?label=downloads" alt="Downloads"></a>
+  <a href="https://python.org"><img src="https://img.shields.io/badge/python-3.9+-blue.svg" alt="Python"></a>
+  <a href="https://github.com/kimhinton/endpulse/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT"></a>
+</p>
+
+<p align="center"><b>Multi-endpoint API health checks with assertions, SSL monitoring, and CI exit codes — in a single command.</b></p>
+
+<p align="center">
+  <a href="https://kimhinton.github.io/endpulse/">Docs</a> ·
+  <a href="https://pypi.org/project/endpulse/">PyPI</a> ·
+  <a href="CHANGELOG.md">Changelog</a>
+</p>
 
 ```bash
 pip install endpulse
