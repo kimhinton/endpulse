@@ -1,0 +1,7 @@
+Contact: https://github.com/kimhinton/endpulse/security/advisories/new
+Contact: mailto:kim.hinton00@gmail.com
+Expires: 2027-04-21T00:00:00.000Z
+Preferred-Languages: en, ko
+Canonical: https://kimhinton.github.io/endpulse/.well-known/security.txt
+Policy: https://github.com/kimhinton/endpulse/blob/main/SECURITY.md
+Acknowledgments: https://github.com/kimhinton/endpulse/releases
