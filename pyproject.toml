@@ -47,9 +47,13 @@ dev = [
 endpulse = "endpulse.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/kimhinton/endpulse"
+Homepage = "https://kimhinton.github.io/endpulse/"
+Documentation = "https://kimhinton.github.io/endpulse/"
 Repository = "https://github.com/kimhinton/endpulse"
 Issues = "https://github.com/kimhinton/endpulse/issues"
+Changelog = "https://github.com/kimhinton/endpulse/blob/main/CHANGELOG.md"
+Discussions = "https://github.com/kimhinton/endpulse/discussions"
+"Release Notes" = "https://github.com/kimhinton/endpulse/releases"
 
 [tool.setuptools.packages.find]
 include = ["endpulse*"]
