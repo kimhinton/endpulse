@@ -1,0 +1,45 @@
+name: Feature request
+description: Suggest a new feature or CLI flag
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you trying to solve?
+      description: What are you trying to do today that is awkward, slow, or impossible with endpulse?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: How would the feature work? Include example CLI flags, YAML keys, or output shape if possible.
+      placeholder: |
+        CLI:
+          endpulse --new-flag <value> ...
+        Or YAML:
+          endpoints:
+            - url: ...
+              new_key: ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What else did you try? Why is endpulse the right place for this (vs curl, k6, Kuma, hurl)?
+
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope check
+      description: endpulse is intentionally narrow. Please confirm the feature fits the tool's scope.
+      options:
+        - label: "This is a health-check feature, not load testing (for load testing use k6 / Artillery)."
+          required: true
+        - label: "This does not require running a persistent server or web UI (use Uptime Kuma / Gatus if it does)."
+          required: true
+        - label: "I am willing to help review the PR or test a preview build."

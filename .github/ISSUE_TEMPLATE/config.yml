@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Q&A — Discussions
+    url: https://github.com/kimhinton/endpulse/discussions
+    about: Ask usage questions, share setups, and discuss ideas before filing an issue.
+  - name: Documentation
+    url: https://kimhinton.github.io/endpulse/
+    about: Read the full docs — most questions are already answered there.
+  - name: Security vulnerability
+    url: https://github.com/kimhinton/endpulse/security/advisories/new
+    about: Report a security issue privately (do NOT use a public issue).
