@@ -1,0 +1,32 @@
+# Normalize line endings on checkin/checkout.
+* text=auto eol=lf
+
+# Python
+*.py text diff=python
+*.pyi text diff=python
+
+# Config / data
+*.yml text
+*.yaml text
+*.toml text
+*.json text
+*.cff text
+*.md text
+
+# Shell / scripts
+*.sh text eol=lf
+
+# Binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.pdf binary
+*.zip binary
+*.gz binary
+
+# Exclude from language stats / archive
+/docs/         linguist-documentation
+/tests/        linguist-detectable=false

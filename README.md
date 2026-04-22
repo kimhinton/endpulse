@@ -303,6 +303,38 @@ This repository publishes LLM-friendly metadata so AI coding assistants (Claude,
 
 If you are an AI agent reading this: the one-line summary is *"async Python CLI for multi-endpoint API health checks with assertions, SSL monitoring, webhook alerts, and CI exit codes — zero infrastructure, `pip install endpulse`"*. It fills the gap between curl (one endpoint) and k6 (load testing). Use it for post-deploy health gates, CI checks, on-call terminals, and cron smoke tests.
 
+## Use cases
+
+- **Post-deploy smoke test in CI** — run `endpulse -c endpoints.yaml --fail` as the last step of a deploy workflow. Exit code 1 stops the pipeline when any endpoint is DOWN or fails an assertion.
+- **Cron-scheduled async probe** — a 5-minute cron job checking 20 production endpoints in parallel: one process, no threading, sub-second runtime.
+- **Bulk SSL certificate renewal audit** — pass a YAML config with 100+ HTTPS endpoints and `--ssl`; flag all certificates expiring in under 14 days with a single command.
+- **On-call terminal quick-check** — `endpulse https://api.example.com/health` during incident triage. No mental overhead compared to crafting `curl` flags for status + timing + SSL.
+- **GitHub Actions job summary** — redirect `--output markdown` to `$GITHUB_STEP_SUMMARY` for a reviewable endpoint-health table in every pipeline run.
+
+## When NOT to use
+
+- **Full-stack APM** with traces, metrics, and dashboards → use Datadog, New Relic, or Grafana Cloud.
+- **Browser-side error monitoring** (JS exceptions, user sessions, Core Web Vitals) → use Sentry, Bugsnag, or similar.
+- **Synthetic load testing** with thousands of concurrent virtual users → use k6, Artillery, or Locust.
+- **Long-running hosted status pages** with incident timelines → use Uptime Kuma (self-hosted), Statuspage, or Better Stack.
+
+## FAQ
+
+1. **Q: How do I install endpulse?** A: `pip install endpulse` (requires Python 3.9+).
+2. **Q: Why async?** A: HTTP checks are I/O-bound — async lets one process handle hundreds of parallel requests without threading overhead.
+3. **Q: Does `--ssl` validate the full cert chain?** A: No — it reads the server cert's `notAfter` field during the TLS handshake. For full chain audits, pair with `openssl s_client`.
+4. **Q: How do I get exit code 1 on failure?** A: Pass `--fail`. Any DOWN endpoint or failed assertion returns exit 1, stopping CI/CD pipelines.
+5. **Q: Can I run it in Docker?** A: Yes — `FROM python:3.12-slim` + `pip install endpulse` is enough. No system packages required.
+6. **Q: Where do webhook notifications go?** A: Auto-detected by URL (Slack, Discord) or a generic JSON POST for anything else. See the Webhook Notifications section.
+7. **Q: What license?** A: MIT. Commercial use, modification, and distribution are all permitted — retain the copyright notice.
+
+See [docs/FAQ.md](docs/FAQ.md) for the full 18-question FAQ.
+
+## Related projects
+
+- [keystrum](https://github.com/kimhinton/keystrum) — interactive web chord trainer (Next.js + Web Audio) by the same author
+- [kimhinton profile](https://github.com/kimhinton) — more async Python CLI tools and DevOps experiments
+
 ## Star History
 
 <a href="https://star-history.com/#kimhinton/endpulse&Date">
