@@ -332,7 +332,7 @@ See [docs/FAQ.md](docs/FAQ.md) for the full 18-question FAQ.
 
 ## Related projects
 
-- [keystrum](https://github.com/kimhinton/keystrum) — interactive web chord trainer (Next.js + Web Audio) by the same author
+- [keystrum](https://github.com/kimhinton/keystrum) — browser-based QWERTY guitar chord strum machine with Karplus-Strong synthesis, by the same author
 - [kimhinton profile](https://github.com/kimhinton) — more async Python CLI tools and DevOps experiments
 
 ## Star History
