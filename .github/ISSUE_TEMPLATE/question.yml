@@ -1,0 +1,40 @@
+name: Question / Usage help
+description: Ask how to use endpulse for your scenario
+title: "[Question] "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Prefer [GitHub Discussions](https://github.com/kimhinton/endpulse/discussions) for usage questions — they are searchable and help future users. Open an issue here only if you have tried Discussions or believe this reveals a documentation gap.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+      description: What are you trying to achieve?
+    validations:
+      required: true
+
+  - type: textarea
+    id: tried
+    attributes:
+      label: What did you try?
+      description: Commands, configs, or docs you consulted.
+      render: shell
+
+  - type: input
+    id: version
+    attributes:
+      label: endpulse version
+      placeholder: "0.3.0"
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues and discussions.
+          required: true
+        - label: I read the README and the docs site at https://kimhinton.github.io/endpulse/.
+          required: true
